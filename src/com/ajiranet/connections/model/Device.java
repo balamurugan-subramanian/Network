@@ -1,5 +1,7 @@
 package com.ajiranet.connections.model;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -25,12 +27,15 @@ public class Device {
 			this.signalStrength=5;
 		}
 		this.connectedDevices = new TreeMap<String, DeviceType>();
+		this.neighbor = new LinkedList<String>();
 	}
 
 	private String name;
 	private DeviceType type;
 	private Map<String, DeviceType> connectedDevices;
 	private int signalStrength = 0;
+	private int level = 0;
+	private List<String> neighbor;
 
 	@Override
 	public boolean equals(Object obj){
