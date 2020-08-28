@@ -6,6 +6,7 @@ import java.util.TreeMap;
 
 import com.ajiranet.connections.constants.Constants;
 import com.ajiranet.connections.model.Device;
+import com.ajiranet.connections.model.Node;
 import com.ajiranet.connections.model.Response;
 import com.ajiranet.connections.network.Network;
 import com.ajiranet.connections.network.NetworkFactory;
@@ -15,7 +16,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		Map<String, Device> devices = new TreeMap<String, Device>();
+		Map<String, Node<Device>> devices = new TreeMap<String, Node<Device>>();
 
 		Scanner scanner = getScanner();
 

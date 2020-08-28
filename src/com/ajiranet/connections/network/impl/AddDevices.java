@@ -5,14 +5,16 @@ import java.util.regex.Matcher;
 
 import com.ajiranet.connections.constants.Constants;
 import com.ajiranet.connections.model.Device;
+import com.ajiranet.connections.model.Node;
 import com.ajiranet.connections.model.Response;
 import com.ajiranet.connections.network.Network;
 import com.ajiranet.connections.util.Utils;
 
 public class AddDevices implements Network{
 	
+	@SuppressWarnings("unchecked")
 	@Override
-	public Response process(String menuOption, Map<String, Device> devices) {
+	public Response process(String menuOption, Map<String, Node<Device>> devices) {
 		Response response = new Response(false, true, "failed", null);
 
 		Matcher matcher = Constants.ADD_DEVICE_PATTERN.matcher(menuOption);
@@ -28,7 +30,7 @@ public class AddDevices implements Network{
 					if (null != devices.get(deviceName)) {
 						response.setErrorMessage(String.format(Constants.DEVICE_NAME_ALREADY_EXISTS_MSG, deviceName));
 					} else {
-						devices.put(deviceName, new Device(deviceName, devicetype));
+						devices.put(deviceName, new Node(new Device(deviceName, devicetype)));
 						response.setError(false);
 						response.setMessage(String.format(Constants.SUCCESSFULLY_ADDED_MSG, deviceName));
 					}
@@ -48,5 +50,7 @@ public class AddDevices implements Network{
 		return response;
 
 	}
+
+	
 
 }

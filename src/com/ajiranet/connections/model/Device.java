@@ -1,10 +1,5 @@
 package com.ajiranet.connections.model;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,26 +11,15 @@ import lombok.ToString;
 @AllArgsConstructor
 public class Device {
 	
-	private static final String REPEATER = "REPEATER";
-	
 	public Device(String name, String deviceType) {
 		this.name = name;
-		if(REPEATER.equals(deviceType)){
-			this.type = DeviceType.REPEATER;
-		}else {
-			this.type = DeviceType.COMPUTER;
-			this.signalStrength=5;
-		}
-		this.connectedDevices = new TreeMap<String, DeviceType>();
-		this.neighbor = new LinkedList<String>();
+		this.type = DeviceType.valueOf(deviceType);
+		this.signalStrength=DeviceType.REPEATER.equals(this.type)?0:5;
 	}
 
 	private String name;
 	private DeviceType type;
-	private Map<String, DeviceType> connectedDevices;
 	private int signalStrength = 0;
-	private int level = 0;
-	private List<String> neighbor;
 
 	@Override
 	public boolean equals(Object obj){

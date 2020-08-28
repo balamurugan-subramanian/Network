@@ -90,7 +90,7 @@ public class ShortestConnectionGraph {
     public static void main(String[] args) {
         int vertices = 6;
         Graph graph = new Graph(vertices);
-        int sourceVertex = 0;
+        int sourceVertex = 2;
         graph.addConnection(0, 1, 4);
         graph.addConnection(0, 2, 3);
         graph.addConnection(1, 2, 1);

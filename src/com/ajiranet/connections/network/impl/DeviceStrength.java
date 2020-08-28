@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import com.ajiranet.connections.constants.Constants;
 import com.ajiranet.connections.model.Device;
 import com.ajiranet.connections.model.DeviceType;
+import com.ajiranet.connections.model.Node;
 import com.ajiranet.connections.model.Response;
 import com.ajiranet.connections.network.Network;
 
@@ -13,7 +14,7 @@ public class DeviceStrength implements Network{
 	
 
 		@Override
-		public Response process(String menuOption, Map<String, Device> devices) {
+		public Response process(String menuOption, Map<String, Node<Device>> devices) {
 			Response response = new Response(false, true, "failed", null);
 			Matcher matcher = Constants.SIGNAL_STRENGTH_PATTERN.matcher(menuOption.toUpperCase());
 			
@@ -23,15 +24,15 @@ public class DeviceStrength implements Network{
 				String parentDeviceName = matcher.group(2).trim();
 				int signalStrength = Integer.parseInt(matcher.group(3));
 				
-				Device parentDevice = devices.get(parentDeviceName);
+				Node<Device> parentDevice = devices.get(parentDeviceName);
 				
 				
 				if (null != parentDevice) {
-					if(DeviceType.REPEATER.equals(parentDevice.getType())){
+					if(DeviceType.REPEATER.equals(parentDevice.getValue().getType())){
 						response.setErrorMessage(String.format(Constants.SIGNAL_STRENGTH_DEVICE_UNSUPPORTED, parentDeviceName));
 						break;
 					}
-					parentDevice.setSignalStrength(signalStrength);
+					parentDevice.getValue().setSignalStrength(signalStrength);
 					response.setError(false);
 					response.setMessage(String.format(Constants.SIGNAL_STRENGTH_UPDATED, parentDeviceName));
 				}else {
